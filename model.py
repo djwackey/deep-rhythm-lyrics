@@ -1,4 +1,6 @@
-# -*- coding: utf-8 -*-
+from __future__ import absolute_import
+from __future__ import print_function
+
 import constants as c
 import numpy as np
 import tensorflow as tf
@@ -118,7 +120,7 @@ class Model(object):
         else:
             prime = unkify(prime, self.vocab)
 
-        print 'prime:%s' % prime.encode('utf8')
+        print('prime:%s' % prime.encode('utf8'))
 
         # prime the model state
         for word in prime.split():
@@ -130,7 +132,7 @@ class Model(object):
 
         # generate the sequence
         gen_seq = prime
-        for i in xrange(num_out):
+        for _ in xrange(num_out):
             # generate word probabilities
             input_i = np.array([[last_word_i]])
             feed_dict = {self.inputs: input_i, self.initial_state: state}

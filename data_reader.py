@@ -1,3 +1,6 @@
+from __future__ import absolute_import
+from __future__ import print_function
+
 import json
 import os
 import random
@@ -30,7 +33,7 @@ class DataReader(object):
             for filename in os.listdir(lrc_path):
                 with open(os.path.join(lrc_path, filename), 'r') as f:
                     try:
-                        print filename
+                        print(filename)
                         artist = json.loads(f.read())
                         for song in artist['songs']:
                             song_lyrics = []
@@ -39,7 +42,7 @@ class DataReader(object):
                                 song_lyrics.append(sentence.strip())
                             self.lyrics.append(song_lyrics)
                     except Exception as e:
-                        print e
+                        print(e)
         # print lyrics
         # self.lyrics = sorted(list(set(self.lyrics)))
         # data_size, _vocab_size = len(lyrics), len(self.lyrics)
@@ -58,18 +61,6 @@ class DataReader(object):
         # Collapses the 2D array to a 1D array of words
         all_words = reduce(lambda a, b: a + b, self.lyrics)
 
-        # TODO: Find out why this UNK code causes differences between Linux and OS X vocabularies
-        # # convert THRESHOLD_COUNT frequent words to '*UNK*'
-        # THRESHOLD_COUNT = 10
-        # least_referenced = Counter(all_words).most_common()[:-(THRESHOLD_COUNT + 1):-1]
-        # least_referenced = [tup[0] for tup in least_referenced] # grab word from (word, count) tuple
-        # print least_referenced
-        #
-        # self.lyrics = [map(lambda word: c.UNK if word in least_referenced else word, song)
-        #                for song in self.lyrics]
-        # # reset all_words to include UNKs
-        # all_words = reduce(lambda a, b: a + b, self.lyrics)
-
         # get a sorted list of unique word tokens
         tokens = sorted(list(set(all_words)))
 
@@ -81,7 +72,7 @@ class DataReader(object):
             for song in self.lyrics
         ]
 
-        print len(tokens)
+        print(len(tokens))
 
         return tokens
 
